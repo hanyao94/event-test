@@ -1,0 +1,33 @@
+## 生产配置
+spring:
+  profiles:
+    active: prd
+server:
+  port: 8080
+  #Tomcat容器配置
+  tomcat:
+    basedir: /apache-tomcat/
+    accesslog:
+      enabled: true
+      pattern: '%t %{trace_id}i %a %U %s %D %b %{User-Agent}i'
+      prefix: localhost_access_log
+      suffix: .txt
+    threads:
+      max: 500
+    accept-count: 500
+    max-http-form-post-size: 1048576
+
+management:
+  server:
+    port: 8081
+
+## 日志配置
+logging:
+  level:
+    org.springframework.web: INFO
+    com.seven.event: INFO
+    druid.sql.Statement: INFO
+    org.springframework.cloud: INFO
+  file:
+    path: /apache-tomcat/logs
+  config: classpath:logback-prd.xml

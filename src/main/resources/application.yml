@@ -1,0 +1,61 @@
+server:
+  port: 8056
+  #Tomcat容器配置
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    application-display-name: event-service
+spring:
+  profiles:
+    active: dev
+  application:
+    name: event-service
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.100:3306/tms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=no
+    username: root
+    password: root
+    #数据库连接池配置
+    druid:
+      initial-size: 1
+      max-active: 20
+      min-idle: 1
+      max-wait: 60000
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      max-open-prepared-statements: 20
+      validation-query: select 1
+      test-on-borrow: false
+      test-on-return: false
+      test-while-idle: true
+      time-between-eviction-runs-millis: 60000
+      min-evictable-idle-time-millis: 300000
+      filters: stat,wall
+      stat-view-servlet:
+        allow:
+        enabled: true
+        url-pattern: /druid/*
+        login-username: adminhd
+        login-password: hd123*pos
+      filter:
+        stat:
+          log-slow-sql: true
+          slow-sql-millis: 10000
+  ## 认证 上传文件大小
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 30MB
+      max-request-size: 30MB
+
+management:
+  endpoint:
+    shutdow:
+      enabled: true
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: "*"

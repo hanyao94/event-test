@@ -1,0 +1,10 @@
+server:
+  port: 8099
+
+## 日志配置
+logging:
+  level:
+    root: INFO
+    com.seven.event: INFO
+  pattern:
+    console: '%d [%thread] [%X{trace_id:--}] %-5level %logger - %msg%n'
