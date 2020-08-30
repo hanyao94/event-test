@@ -4,4 +4,5 @@ java -server -Xmx${Xmx} -Xms${Xms} -Xmn${Xmn} \
      -Dfile.encoding=UTF-8  \
      -Dlogging.path=/apache-tomcat/logs \
      -Dlogging.config=classpath:logback-prd.xml \
+     -Dspring.profiles.active=prd \
      -jar /opt/app/event.jar

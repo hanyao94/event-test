@@ -97,8 +97,10 @@ docker run -d --restart=always \
 - 引入docker-maven 插件在install 之后上传到镜像仓库
 
 
-- 调整`Action.sh`启动脚本，从镜像仓库拉取
+- 调整`Action.sh`启动脚本，
+ 1. 从镜像仓库拉取
+ 2. 引入jmxremote 监控
 
+- 调整`docker-entrypoint.sh`配置，加入JVM相关配置，加入jmxremote监控
 
-- 调整`docker-entrypoint.sh`配置，加入JVM相关配置
 
