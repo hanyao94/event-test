@@ -6,10 +6,13 @@ LABEL PROJECT="event-test" \
       AUTHOR="huanghanyao" \
       COMPANY="Ltd."
 
-WORKDIR /
+WORKDIR /opt/app
 
+ENV LC_ALL en_US.UTF-8
+COPY docker-entrypoint.sh /opt/app
+RUN chmod +x /opt/app/docker-entrypoint.sh
 ADD event*.jar event.jar
 
-EXPOSE 8080 8056 9003
+EXPOSE 8080 8443 9003
 
-CMD ["java","-jar","event.jar"]
+CMD ["/opt/app/docker-entrypoint.sh"]

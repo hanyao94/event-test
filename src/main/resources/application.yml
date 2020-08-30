@@ -7,13 +7,13 @@ server:
     application-display-name: event-service
 spring:
   profiles:
-    active: dev
+    active: dev #配置项目启动的时候，使用哪个环境，开发、测试还是产品环境
   application:
     name: event-service
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://192.168.1.100:3306/tms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=no
+    url: jdbc:mysql://localhost:3306/tms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=no
     username: root
     password: root
     #数据库连接池配置

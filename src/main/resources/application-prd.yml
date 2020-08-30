@@ -13,8 +13,9 @@ server:
       prefix: localhost_access_log
       suffix: .txt
     threads:
-      max: 500
-    accept-count: 500
+      max: 500  #最大线程数，默认200
+    accept-count: 500 #最大等待数
+    max-connections: 5000  # 最大连接数 > 最大线程数+最大等待数，默认值：8192
     max-http-form-post-size: 1048576
 
 management:
