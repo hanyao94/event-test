@@ -16,6 +16,9 @@
 
   <properties>
     <java.version>1.8</java.version>
+    <docker-maven-plugin.version>0.4.13</docker-maven-plugin.version>
+    <docker.registry>hanyao94</docker.registry>
+    <docker.registry.url>hub.docker.com/repositories</docker.registry.url>
   </properties>
 
   <dependencies>
@@ -100,5 +103,103 @@
       </plugin>
     </plugins>
   </build>
+
+  <distributionManagement>
+    <repository>
+      <id>releases</id>
+      <url>http://searly.asuscomm.com:8036/repository/maven-releases</url>
+    </repository>
+    <snapshotRepository>
+      <id>snapshots</id>
+      <url>http://searly.asuscomm.com:8036/repository/maven-snapshots</url>
+    </snapshotRepository>
+  </distributionManagement>
+
+  <profiles>
+    <profile>
+      <id>deploy</id>
+      <activation>
+        <property>
+          <name>deploy</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <configuration>
+              <skip>false</skip>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>docker</id>
+      <activation>
+        <property>
+          <name>docker</name>
+        </property>
+      </activation>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>com.spotify</groupId>
+            <artifactId>docker-maven-plugin</artifactId>
+            <version>${docker-maven-plugin.version}</version>
+            <configuration>
+              <serverId>hanyao94-dockerhub</serverId>
+              <registryUrl>https://${docker.registry.url}</registryUrl>
+            </configuration>
+            <executions>
+              <execution>
+                <id>build-image</id>
+                <phase>package</phase>
+                <goals>
+                  <goal>build</goal>
+                </goals>
+                <configuration>
+                  <dockerDirectory>${project.basedir}/src/main/docker</dockerDirectory>
+                  <imageName>${docker.registry}/${project.artifactId}</imageName> <!-- 镜像名 -->
+                  <imageTags>
+                    <imageTag>${project.version}</imageTag>  <!-- 镜像tag，支持多个tag -->
+                  </imageTags>
+                  <forceTags>true</forceTags>
+                  <labels>
+                    <label>VERSION=${project.version}</label>
+                  </labels>
+                  <resources>
+                    <resource>
+                      <targetPath>/</targetPath>
+                      <directory>${project.build.directory}</directory>
+                      <include>${project.build.finalName}.jar
+                      </include> <!-- 将制品添加到docker build context -->
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+              <execution>
+                <id>push-image</id>
+                <phase>deploy</phase>
+                <goals>
+                  <goal>push</goal>
+                </goals>
+                <configuration>
+                  <serverId>hanyao94-dockerhub</serverId>
+                  <imageName>${docker.registry}/${project.artifactId}:${project.version}</imageName><!-- 需要push到仓库的镜像，目前只支持一个 -->
+                  <registryUrl>https://${docker.registry.url}</registryUrl>
+                  <retryPushCount>3</retryPushCount>
+                  <retryPushTimeout>60</retryPushTimeout>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+  </profiles>
 
 </project>

@@ -1,4 +1,4 @@
-docker build -t event:0.0.2 .
+docker pull hanyao94/event:0.0.1-SNAPSHOT
 docker rm -f event-server
 docker run -d --restart=always \
            --env-file ./envfile \
@@ -10,4 +10,4 @@ docker run -d --restart=always \
            -e Xml=128m \
            --restart=on-failure:3 \
            -v "E:\docker\log\event-test":/apache-tomcat/logs  \
-           --name event-server event:0.0.2
+           --name event-server hanyao94/event:0.0.1-SNAPSHOT
