@@ -101,6 +101,8 @@ docker run -d --restart=always \
  1. 从镜像仓库拉取
  2. 引入jmxremote 监控
 
+- 用docker 部署mysql，调整应用envfile的数据库配置指向部署的mysql
+
 - 调整`docker-entrypoint.sh`配置，加入JVM相关配置，加入jmxremote监控
 
 
