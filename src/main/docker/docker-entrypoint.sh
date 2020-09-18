@@ -1,5 +1,5 @@
 #!/bin/sh
-java -server -Xmx${Xmx} -Xms${Xms} -Xmn${Xmn} \
+java $JAVA_JAR -server -Xmx${Xmx} -Xms${Xms} -Xmn${Xmn} \
      -Xss1024k -XX:+DisableExplicitGC -XX:+UseConcMarkSweepGC \
      -XX:+CMSParallelRemarkEnabled -XX:+UseCMSCompactAtFullCollection  \
      -XX:LargePageSizeInBytes=${Xml} -XX:+UseFastAccessorMethods  \
