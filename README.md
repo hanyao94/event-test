@@ -261,3 +261,8 @@ docker run -d --restart=always \
 2. 搭建成功后启动，修改envfile 数据源配置为搭建好的数据库:端口为13306
 > `spring.datasource.url=jdbc:mysql://192.168.1.100:13306/tms?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC&useSSL=no`
 
+- 阶段二启动方式：
+1. 配置好prd生产环境配置：tomcat配置、日志格式输出等
+2. 讲Action.sh 和 envfile 文件放到服务器（本地）上同一目录下
+3. 服务器上进入这个目录，运行 sh action.sh 变运行起来了；本地使用git bash 窗口找到这个目录运行 sh Action.sh
+
